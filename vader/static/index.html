@@ -47,6 +47,10 @@
         return "neutral";
     };
 
+    var encode = function (text) {
+        return text.replace(/#/g, "%23").replace(/\?/g, "%3F");
+    };
+
     var process_text = function (e) {
         var text = '';
         var terminator = '';
@@ -54,9 +58,9 @@
         // Return without processing unless key ended a sentence
         if (e.originalEvent.key) {
             if (! [".", "?", "!"].includes(e.originalEvent.key)) return;
-            text = e.target.value + e.originalEvent.key;
+            text = encode(e.target.value + e.originalEvent.key);
         } else {
-            text = $("#input_text").val();
+            text = encode($("#input_text").val());
             e.preventDefault();
         }
 

@@ -15,7 +15,7 @@ sid = SentimentIntensityAnalyzer()
 
 
 def score(text):
-    return sid.polarity_scores(text)
+    return sid.polarity_scores(text.replace('#', ''))
 
 @app.route("/")
 def index():
