@@ -9,7 +9,8 @@ RUN apk add --update-cache \
     python3-dev \
   && rm -rf /var/cache/apk/*
 
-COPY ./vader ./vader
+COPY ./vader/requirements.txt ./vader/requirements.txt
+COPY ./vader/installation.py ./vader/installation.py
 
 WORKDIR /vader
 
@@ -17,6 +18,8 @@ RUN python3 -m venv venv \
   && source venv/bin/activate \
   && pip3 install --requirement requirements.txt \
   && python installation.py
+
+COPY ./vader ./
 
 EXPOSE 9600/tcp
 
