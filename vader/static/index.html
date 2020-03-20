@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<title>sentiment analysis as you type</title>
+<style type="text/css">
+    label { display: block }
+    .positive { background-color:#CFC }
+    .negative { background-color:#FCC }
+    .neutral { background-color:#FFC }
+    #input_text,
+    #scored_text { border: 1px solid #000; font-family: monospace; min-height: 5em; width: 40em; }
+</style>
+</head>
+<body>
+
+<h1>Sentiment Analysis as You Type</h1>
+<h2>Intructions</h2>
+<p>Start typing. Ending a sentence (by typing "." or "?" or "!") will automatically send the text for analysis. Or you can use the "Send" button to analyze the text.</p>
+
+<form id="input_form">
+<label><h2>Input Text</h2>
+<textarea id="input_text"></textarea></label>
+<label><input type="submit" value="Send" class="button"></label>
+</form>
+
+<h2>Scored Text</h2>
+<div id="scored_text"></div>
+
+<h3>Overall Score</h3>
+<div id="aggregate_score"></div>
+
+<h2>About</h2>
+<p>This form uses the <a href="https://www.nltk.org/_modules/nltk/sentiment/vader.html">VADER</a> sentiment analysis tools from the <a href="https://www.nltk.org/">NLTK</a> (Natural Language ToolKit). A short tutorial on using this tool is <a href="https://programminghistorian.org/en/lessons/sentiment-analysis">Sentiment Analysis for Exploratory Data Analysis</a>.</p>
+<p>When using the tool, I found that I could easily find positive phrases that were considered negative and vice-versa. In spite of these false readings, the researchers who created it found that the tool had higher reliability than humans scoring the same texts.</p>
+
+<script src="https://osric.com/chris/javascript/jquery-3.4.1.min.js"></script>
+<script>
+    var sentiment = function (score) {
+        if (score < 0) {
+            return "negative";
+        }
+        if (score > 0) {
+            return "positive";
+        }
+        return "neutral";
+    };
+
+    var process_text = function (e) {
+        var text = '';
+        var terminator = '';
+
+        // Return without processing unless key ended a sentence
+        if (e.originalEvent.key) {
+            if (! [".", "?", "!"].includes(e.originalEvent.key)) return;
+            text = e.target.value + e.originalEvent.key;
+        } else {
+            text = $("#input_text").val();
+            e.preventDefault();
+        }
+
+        // Get JSON values for the score
+        jQuery.getJSON('/api?text=' + text,
+            function(data) {
+                console.log(e);
+                var sentence;
+                var round_score;
+
+                // reset scored text
+                $("#scored_text").empty();
+                // reset overall score
+                $("#aggregate_score").empty();
+
+                // loop over each sentence and create the scored text
+                $.each( data.sentences, function( i ) {
+                    var text = data.sentences[i].sentence;
+                    var score = data.sentences[i].score;
+
+                    round_score = Number.parseFloat(score).toPrecision(2);
+                    sentence = "<span class='" + sentiment(score) + "'>" + text + "<sup>" + round_score + "</sup></span> ";
+                    $("#scored_text").append(sentence);
+                });
+                // Update overall score
+                $("#aggregate_score").append("<span class='" + sentiment(data.aggregate_score) + "'>" + data.aggregate_score + "</span>");
+            });
+ 
+    }
+
+    // Trigger processing on keypress
+    $("#input_text").keypress(process_text);
+    $("#input_form").submit(process_text);
+</script>
+</body>
+</html>
+
