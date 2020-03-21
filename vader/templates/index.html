@@ -19,17 +19,17 @@
 <h2>Intructions</h2>
 <p>Start typing. Ending a sentence (by typing "." or "?" or "!") will automatically send the text for analysis. Or you can use the "Send" button to analyze the text.</p>
 
-<form id="input_form">
+<form id="input_form" method="POST">
 <label><h2>Input Text</h2>
-<textarea id="input_text"></textarea></label>
+<textarea id="input_text" name="input_text">{{ input_text }}</textarea></label>
 <label><input type="submit" value="Send" class="button"></label>
 </form>
 
 <h2>Scored Text</h2>
-<div id="scored_text"></div>
+<div id="scored_text">{{ scored_text|safe }}</div>
 
 <h3>Overall Score</h3>
-<div id="aggregate_score"></div>
+<div id="aggregate_score">{{ aggregate_score }}</div>
 
 <h2>About</h2>
 <p>This form uses the <a href="https://www.nltk.org/_modules/nltk/sentiment/vader.html">VADER</a> sentiment analysis tools from the <a href="https://www.nltk.org/">NLTK</a> (Natural Language ToolKit). A short tutorial on using this tool is <a href="https://programminghistorian.org/en/lessons/sentiment-analysis">Sentiment Analysis for Exploratory Data Analysis</a>.</p>

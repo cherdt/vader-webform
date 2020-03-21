@@ -2,6 +2,7 @@ import json
 import nltk.data
 from flask import Flask
 from flask import escape
+from flask import Markup
 from flask import render_template
 from flask import request
 #from flask import send_static_file
@@ -50,6 +51,22 @@ def score_sentences(text):
     return scored_sentences
 
 
+def score_sentences_to_html(text):
+    html = []
+    scored_sentences = score_sentences(text)
+
+    for item in scored_sentences:
+        css_class = 'neutral'
+        if item['score'] > 0:
+            css_class = 'positive'
+        elif item['score'] < 0:
+            css_class = 'negative'
+        span = Markup('<span class="' + css_class + '">') + escape(item['sentence']) + Markup('<sup>' + format(item['score'], '.2f') + '</sup></span>')
+        html.append(span)
+
+    return Markup(' '.join(html))
+
+
 def score_text(text):
     """Given text, return the score of the text
 
@@ -59,9 +76,21 @@ def score_text(text):
     return sid.polarity_scores(text.replace('#', ''))
 
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+    input_text = ''
+    scored_text = ''
+    aggregate_score = ''
+
+    if request.form.get('input_text'):
+        input_text = request.form.get('input_text')
+        scored_text = score_sentences_to_html(input_text)
+        aggregate_score = str(score_text(input_text)['compound'])
+
+    return render_template('index.html', 
+                            input_text=input_text, 
+                            scored_text=scored_text,
+                            aggregate_score=aggregate_score)
 
 
 @app.route("/api")
