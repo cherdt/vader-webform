@@ -3,6 +3,9 @@ VADER web
 
 A web form that analyzes text and provides VADER sentiment analysis scores as you type.
 
+An example is available at https://osric.com/chris/sentiment-analysis
+
+
 How to use
 ----------
 
@@ -11,6 +14,7 @@ You can run this locally using the prebuilt Docker image:
     sudo docker run -p 9600:9600 cherdt/vader-form:latest
 
 Then visit http://localhost:9600
+
 
 Modifying the code
 ------------------
@@ -26,12 +30,14 @@ Some steps on how to set up a Python virtual environment and modify the code:
 * cd vader
 * flask run
 
+
 Build the Docker image
 ----------------------
 
 From the same directory as the `README.md` file:
 
     sudo docker build -f ./docker/Dockerfile . --tag <username>/vader-form:latest
+
 
 More information
 ----------------
