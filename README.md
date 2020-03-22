@@ -4,7 +4,7 @@ VADER web
 
 A web form that analyzes text and provides VADER sentiment analysis scores as you type.
 
-An example is available at https://osric.com/chris/sentiment-analysis
+An example is available at https://osric.com/chris/sentiment-analysis/
 
 
 How to use
@@ -20,16 +20,19 @@ Then visit http://localhost:9600
 Modifying the code
 ------------------
 
-Some steps on how to set up a Python virtual environment and modify the code:
+If you'd like to make modifications, you'll likely want to run the code
+via the Flask development server for testing.
 
-* git clone https://github.com/cherdt/vader-webform.git 
-* cd vader-webform
-* python3 -m venv venv
-* source venv/bin/activate
-* pip install -r requirements.txt
-* export FLASK_APP=vader-web.py
-* cd vader
-* flask run
+Steps on how to set up a Python virtual environment and run Flask:
+
+    git clone https://github.com/cherdt/vader-webform.git 
+    cd vader-webform
+    python3 -m venv venv
+    source venv/bin/activate
+    pip install -r requirements.txt
+    export FLASK_APP=vader-web.py
+    cd vader
+    flask run
 
 
 Build the Docker image
@@ -37,7 +40,7 @@ Build the Docker image
 
 From the same directory as the `README.md` file:
 
-    sudo docker build -f ./docker/Dockerfile . --tag <username>/vader-form:latest
+    sudo docker build --tag <username>/vader-form:latest -f ./docker/Dockerfile .
 
 
 More information
