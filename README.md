@@ -1,5 +1,6 @@
 VADER web
 =========
+[![Build Status](https://travis-ci.org/cherdt/vader-webform.svg?branch=master)](https://travis-ci.org/cherdt/vader-webform)
 
 A web form that analyzes text and provides VADER sentiment analysis scores as you type.
 
