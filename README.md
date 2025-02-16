@@ -30,6 +30,7 @@ Steps on how to set up a Python virtual environment and run Flask:
     python3 -m venv venv
     source venv/bin/activate
     pip install -r requirements.txt
+    python installation.py
     export FLASK_APP=vader-web.py
     cd vader
     flask run
