@@ -42,7 +42,7 @@ Build the Docker image
 
 From the same directory as the `README.md` file:
 
-    sudo docker build --tag <username>/vader-form:latest -f ./docker/Dockerfile .
+    sudo docker build --tag <username>/vader-form:latest -f Dockerfile .
 
 
 More information
