@@ -23,5 +23,5 @@ COPY ./vader ./
 
 EXPOSE 9600/tcp
 
-CMD ["/vader/venv/bin/uwsgi", "--http", ":9600", "--mount", "/=vader-web:app"]
+CMD ["/vader/venv/bin/uwsgi", "--http", ":9600", "--mount", "/=vader_web:app"]
 
