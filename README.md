@@ -1,6 +1,7 @@
 VADER web
 =========
-[![Build Status](https://travis-ci.org/cherdt/vader-webform.svg?branch=master)](https://travis-ci.org/cherdt/vader-webform)
+![pylint](https://github.com/cherdt/vader-webform/actions/workflows/pylint.yml/badge.svg?branch=main)
+
 
 A web form that analyzes text and provides VADER sentiment analysis scores as you type.
 
