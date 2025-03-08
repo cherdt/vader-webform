@@ -1,6 +1,6 @@
 VADER web
 =========
-![pylint](https://github.com/cherdt/vader-webform/actions/workflows/pylint.yml/badge.svg?branch=main)
+![pylint](https://github.com/cherdt/vader-webform/actions/workflows/pylint.yml/badge.svg?branch=main) ![osv-scanner](https://github.com/cherdt/vader-webform/actions/workflows/osv-scanner.yml/badge.svg?branch=main)
 
 
 A web form that analyzes text and provides VADER sentiment analysis scores as you type.
