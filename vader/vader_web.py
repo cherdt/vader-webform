@@ -1,3 +1,4 @@
+"""VADER sentiment analyzer webform/mini web application."""
 import json
 import nltk.data
 from flask import Flask
@@ -52,6 +53,10 @@ def score_sentences(text):
 
 
 def score_sentences_to_html(text):
+    """Score sentences using VADER and markup output with HTML and CSS
+
+    Arguments: text -- user-submitted text
+    """
     html = []
     scored_sentences = score_sentences(text)
 
@@ -61,7 +66,10 @@ def score_sentences_to_html(text):
             css_class = 'positive'
         elif item['score'] < 0:
             css_class = 'negative'
-        span = Markup('<span class="' + css_class + '">') + escape(item['sentence']) + Markup('<sup>' + format(item['score'], '.2f') + '</sup></span>')
+        span = (Markup('<span class="' + css_class + '">') +
+                escape(item['sentence']) +
+                Markup('<sup>' + format(item['score'], '.2f') +
+                '</sup></span>'))
         html.append(span)
 
     return Markup(' '.join(html))
@@ -78,6 +86,7 @@ def score_text(text):
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
+    """Display the index page of the app"""
     input_text = ''
     scored_text = ''
     aggregate_score = ''
@@ -87,20 +96,19 @@ def index():
         scored_text = score_sentences_to_html(input_text)
         aggregate_score = str(score_text(input_text)['compound'])
 
-    return render_template('index.html', 
-                            input_text=input_text, 
+    return render_template('index.html',
+                            input_text=input_text,
                             scored_text=scored_text,
                             aggregate_score=aggregate_score)
 
 
 @app.route("/api")
 def score_input():
+    """Process API requests to the app"""
     text = request.args.get('text')
 
     return json.dumps(score_text_and_summary(text))
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0') 
-
-
+    app.run(host='0.0.0.0')
