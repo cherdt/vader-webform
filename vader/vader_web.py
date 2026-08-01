@@ -2,10 +2,10 @@
 import json
 import nltk.data
 from flask import Flask
-from flask import escape
-from flask import Markup
 from flask import render_template
 from flask import request
+from markupsafe import escape
+from markupsafe import Markup
 #from flask import send_static_file
 from flask_cors import CORS
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
