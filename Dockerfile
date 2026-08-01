@@ -19,6 +19,9 @@ RUN python3 -m venv venv \
   && pip3 install --requirement requirements.txt \
   && python installation.py
 
+# we shouldn't need gcc beyond Python package installation
+RUN apk del gcc
+
 COPY ./vader ./
 
 EXPOSE 9600/tcp
